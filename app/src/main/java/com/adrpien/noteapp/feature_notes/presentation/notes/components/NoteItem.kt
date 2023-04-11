@@ -67,7 +67,7 @@ fun NoteItem(
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
-                text = note.title,
+                text = note.description,
                 color = MaterialTheme.colors.onSurface,
                 style = MaterialTheme.typography.h6,
                 maxLines = 1,
@@ -76,7 +76,7 @@ fun NoteItem(
         }
         IconButton(
             modifier = Modifier.align(Alignment.BottomEnd),
-            onClick = { onDeleteClick }) {
+            onClick =  onDeleteClick ) {
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Delete")

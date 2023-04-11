@@ -11,10 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -42,8 +39,8 @@ fun AddEditNoteScreen(
     noteColor: Int
 ){
 
-    val titleState = addEditViewModel.noteTitle.value
-    val descriptionState = addEditViewModel.noteDescription.value
+    val titleState = addEditViewModel.noteTitle.collectAsState().value
+    val descriptionState = addEditViewModel.noteDescription.collectAsState().value
 
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -75,7 +72,9 @@ fun AddEditNoteScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { addEditViewModel.onEvent(AddEditNoteEvent.SaveNote) },
+                onClick = {
+                    addEditViewModel.onEvent(AddEditNoteEvent.SaveNote)
+                },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(

@@ -82,17 +82,17 @@ fun NotesScreen(
             }
             Spacer(modifier = Modifier.width(16.dp))
             LazyColumn(Modifier.fillMaxSize()){
-                items(state.notes) {
+                items(state.notes) { note ->
                     NoteItem(
-                        note = it,
+                        note = note,
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
                                 navController.navigate(Screen.AddEditNoteScreen.route +
-                                        "?noteId=${it.id}&noteColor=${it.color}")
+                                        "?noteId=${note.id}&noteColor=${note.color}")
                             },
                          onDeleteClick = {
-                             viewModel.onEvent(NotesEvent.DeleteNote(note = it))
+                             viewModel.onEvent(NotesEvent.DeleteNote(note = note))
                              coroutineScope.launch {
                                  val actionResult = scaffoldState.snackbarHostState.showSnackbar(
                                      message = "Note Deleted",
