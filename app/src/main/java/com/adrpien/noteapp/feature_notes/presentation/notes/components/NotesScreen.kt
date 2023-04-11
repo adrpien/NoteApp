@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.adrpien.noteapp.feature_notes.presentation.notes.NotesEvent
 import com.adrpien.noteapp.feature_notes.presentation.notes.NotesViewModel
+import com.adrpien.noteapp.feature_notes.presentation.util.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,7 @@ fun NotesScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(Screen.AddEditNoteScreen.route)},
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(
@@ -87,7 +88,8 @@ fun NotesScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                // TODO NoteItemClick reaction
+                                navController.navigate(Screen.AddEditNoteScreen.route +
+                                        "?noteId=${it.id}&noteColor=${it.color}")
                             },
                          onDeleteClick = {
                              viewModel.onEvent(NotesEvent.DeleteNote(note = it))
@@ -102,7 +104,7 @@ fun NotesScreen(
                              }
                          }
                     )
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }

@@ -73,4 +73,8 @@ class NotesViewModel @Inject constructor(
         // WHY DO I NEED LAUNCHIN 
     }
 
+    private fun getNote(id: Int) {
+
+    }
+
 }

@@ -7,10 +7,7 @@ import com.adrpien.noteapp.feature_notes.data.data_source.local.NoteDatabase
 import com.adrpien.noteapp.feature_notes.data.data_source.local.NoteDatabase.Companion.DATABASE_NAME
 import com.adrpien.noteapp.feature_notes.data.repository.NoteRepositoryImplementation
 import com.adrpien.noteapp.feature_notes.domain.repository.NoteRepository
-import com.adrpien.noteapp.feature_notes.domain.use_case.AddNote
-import com.adrpien.noteapp.feature_notes.domain.use_case.DeleteNote
-import com.adrpien.noteapp.feature_notes.domain.use_case.GetNotes
-import com.adrpien.noteapp.feature_notes.domain.use_case.NoteUseCases
+import com.adrpien.noteapp.feature_notes.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,7 +42,8 @@ object AppModule {
         return NoteUseCases(
             getNotes = GetNotes(repository),
             deleteNote = DeleteNote(repository),
-            addNote = AddNote(repository)
+            addNote = AddNote(repository),
+            getNote = GetNote(repository)
         )
     }
 

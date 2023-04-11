@@ -76,7 +76,7 @@ fun NoteItem(
         }
         IconButton(
             modifier = Modifier.align(Alignment.BottomEnd),
-            onClick = { onDeleteClick}) {
+            onClick = { onDeleteClick }) {
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Delete")
