@@ -49,8 +49,8 @@ class MainActivity : ComponentActivity() {
                                     defaultValue = -1
                                 },
                                 navArgument("noteColor") {
-                                type = androidx.navigation.NavType.IntType
-                                defaultValue = -1
+                                    type = androidx.navigation.NavType.IntType
+                                    defaultValue = -1
                                 }
                             )
                         ){
