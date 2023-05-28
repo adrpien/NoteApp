@@ -34,7 +34,6 @@ class AddEditViewModel @Inject constructor(
     private val _noteTitle = MutableStateFlow(NoteTextFieldState(
         hint = "EnterTitle"
     ))
-
     val noteTitle= _noteTitle
 
     private val _noteDescription = MutableStateFlow(NoteTextFieldState(
@@ -47,12 +46,6 @@ class AddEditViewModel @Inject constructor(
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
-
-    sealed class UiEvent {
-        object SaveNote: UiEvent()
-        data class ShowSnackBar(val messege: String): UiEvent()
-    }
-
 
     init{
         savedStateHandle.get<Int>("noteId")?.let { id ->
@@ -73,6 +66,11 @@ class AddEditViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    sealed class UiEvent {
+        object SaveNote: UiEvent()
+        data class ShowSnackBar(val messege: String): UiEvent()
     }
 
     fun onEvent(addEditNoteEvent: AddEditNoteEvent){
@@ -99,12 +97,9 @@ class AddEditViewModel @Inject constructor(
                             noteTitle.value.text.isBlank()
                 )
             }
-            is AddEditNoteEvent.EnteredDescription -> {
-
-            }
             is AddEditNoteEvent.SaveNote -> {
                 viewModelScope.launch {
-                    try {
+                    try  {
                         noteUseCases.addNote(
                             Note(
                                 title = noteTitle.value.text,
@@ -124,7 +119,7 @@ class AddEditViewModel @Inject constructor(
                     }
                 }
             }
-            is AddEditNoteEvent.ChangeColor -> {
+            is AddEditNoteEvent.ChangeColor ->   {
                 _noteColor.value = addEditNoteEvent.color
             }
         }

@@ -64,17 +64,14 @@ class NotesViewModel @Inject constructor(
 
     private fun getNotes(sortType: SortType) {
         getNotesJob = null
-        getNotesJob = noteUseCases.getNotes(sortType).onEach { notes ->
-            notesState.value = notesState.value.copy(
-                notes = notes,
-                sortType = sortType
-            )
+        getNotesJob = noteUseCases.getNotes(sortType)
+            .onEach { notes ->
+                notesState.value = notesState.value.copy(
+                    notes = notes,
+                    sortType = sortType
+                )
         }.launchIn(viewModelScope)
         // WHY DO I NEED LAUNCHIN 
-    }
-
-    private fun getNote(id: Int) {
-
     }
 
 }

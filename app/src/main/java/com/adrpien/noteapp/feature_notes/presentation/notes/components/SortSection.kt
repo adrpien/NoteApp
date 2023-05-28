@@ -21,26 +21,26 @@ fun SortSection(
             SortRadioButton(
                 title = "Title",
                 selected = sortType is SortType.Title,
-                onChecked = { onSortChange(SortType.Title(sortType.orderType)) })
+                onClick = { onSortChange(SortType.Title(sortType.orderType)) })
             SortRadioButton(
                 title = "Time",
                 selected = sortType is SortType.Time,
-                onChecked = { onSortChange(SortType.Title(sortType.orderType)) })
+                onClick = { onSortChange(SortType.Time(sortType.orderType)) })
             SortRadioButton(
                 title = "Color",
                 selected = sortType is SortType.Color,
-                onChecked = { onSortChange(SortType.Color(sortType.orderType)) })
+                onClick = { onSortChange(SortType.Color(sortType.orderType)) })
         }
         Spacer(modifier = Modifier.width(8.dp))
         Row(Modifier.fillMaxWidth()) {
             SortRadioButton(
                 title = "Descending",
                 selected = sortType.orderType is OrderType.Descending,
-                onChecked = { onSortChange(sortType.changeOrderType(OrderType.Descending)) })
+                onClick = { onSortChange(sortType.changeOrderType(OrderType.Descending)) })
             SortRadioButton(
                 title = "Ascending",
                 selected = sortType.orderType is OrderType.Ascending,
-                onChecked = { onSortChange(sortType.changeOrderType(OrderType.Ascending)) })
+                onClick = { onSortChange(sortType.changeOrderType(OrderType.Ascending)) })
         }
     }
 

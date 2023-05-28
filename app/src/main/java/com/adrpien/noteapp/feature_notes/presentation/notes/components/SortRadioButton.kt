@@ -1,6 +1,5 @@
 package com.adrpien.noteapp.feature_notes.presentation.notes.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
@@ -18,7 +17,7 @@ import androidx.compose.ui.unit.dp
 fun SortRadioButton(
     title: String,
     selected: Boolean,
-    onChecked: () -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ){
     Row(
@@ -27,10 +26,10 @@ fun SortRadioButton(
     ) {
         RadioButton(
             selected = selected,
-            onClick = { onChecked },
+            onClick = onClick,
             colors = RadioButtonDefaults.colors(
                 selectedColor = MaterialTheme.colors.primary,
-                unselectedColor = MaterialTheme.colors.background
+                unselectedColor = MaterialTheme.colors.onBackground
             )
         )
         Spacer(modifier = Modifier

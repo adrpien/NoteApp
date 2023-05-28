@@ -37,7 +37,7 @@ fun AddEditNoteScreen(
     addEditViewModel: AddEditViewModel = hiltViewModel(),
     navController: NavController,
     noteColor: Int
-){
+) {
 
     val titleState = addEditViewModel.noteTitle.collectAsState().value
     val descriptionState = addEditViewModel.noteDescription.collectAsState().value
@@ -48,14 +48,14 @@ fun AddEditNoteScreen(
     val noteBackgroundAnimatable = remember {
         Animatable(
             Color(
-                if(noteColor != -1) noteColor else addEditViewModel.noteColor.value
+                if (noteColor != -1) noteColor else addEditViewModel.noteColor.value
             )
         )
     }
 
     LaunchedEffect(key1 = true) {
         addEditViewModel.eventFlow.collectLatest { event ->
-            when(event) {
+            when (event) {
                 is AddEditViewModel.UiEvent.SaveNote -> {
                     navController.navigateUp()
                 }
@@ -68,7 +68,7 @@ fun AddEditNoteScreen(
             }
         }
     }
-    
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -78,89 +78,88 @@ fun AddEditNoteScreen(
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(
-                    imageVector = Icons.Default.Save, 
-                    contentDescription = "Save")
+                    imageVector = Icons.Default.Save,
+                    contentDescription = "Save"
+                )
             }
         },
         scaffoldState = scaffoldState
-    ) {
+    ) {padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(noteBackgroundAnimatable.value)
-                .padding(16.dp))
-                {
-                    Row(
+                .padding(padding)
+        )
+        {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Note.colorList.forEach() { colorInt ->
+                    val color = Color(colorInt.red, colorInt.green, colorInt.blue)
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Note.colorList.forEach() { colorInt ->
-                            val color = Color(colorInt.red, colorInt.green, colorInt.blue)
-                            Box(
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .shadow(15.dp, CircleShape)
-                                    .clip(CircleShape)
-                                    .background(color)
-                                    .border(
-                                        width = 3.dp,
-                                        color = if (addEditViewModel.noteColor.value == colorInt) Color.Black else Color.Transparent,
-                                        shape = CircleShape
-                                    )
-                                    .clickable {
-                                        coroutineScope.launch {
-                                            noteBackgroundAnimatable.animateTo(
-                                                targetValue = color,
-                                                animationSpec = tween(
-                                                    durationMillis = 500
-                                                )
-                                            )
-                                        }
-                                        addEditViewModel.onEvent(
-                                            AddEditNoteEvent.ChangeColor(
-                                                colorInt
-                                            )
-                                        )
-                                    }
+                            .size(50.dp)
+                            .shadow(15.dp, CircleShape)
+                            .clip(CircleShape)
+                            .background(color)
+                            .border(
+                                width = 3.dp,
+                                color = if (addEditViewModel.noteColor.value == colorInt) Color.Black else Color.Transparent,
+                                shape = CircleShape
                             )
-                        }
-
-
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    TransparentTextField(
-                        text = titleState.text,
-                        hint = titleState.hint,
-                        onValueChange = {
-                            addEditViewModel.onEvent(AddEditNoteEvent.EnteredTitle(it))
-                        },
-                        onFocusChange = {
-                            addEditViewModel.onEvent(AddEditNoteEvent.ChangeTitleFocus(it))
-                        },
-                        isHintVisible = titleState.isHintVisible,
-                        singleLine = true,
-                        textStyle = MaterialTheme.typography.h5
+                            .clickable {
+                                coroutineScope.launch {
+                                    noteBackgroundAnimatable.animateTo(
+                                        targetValue = color,
+                                        animationSpec = tween(
+                                            durationMillis = 500
+                                        )
+                                    )
+                                }
+                                addEditViewModel.onEvent(
+                                    AddEditNoteEvent.ChangeColor(
+                                        colorInt
+                                    )
+                                )
+                            }
                     )
+                }
+            }
 
-                    Spacer(modifier = Modifier.height(16.dp))
-                    TransparentTextField(
-                        text = descriptionState.text,
-                        hint = descriptionState.hint,
-                        onValueChange = {
-                            addEditViewModel.onEvent(AddEditNoteEvent.EnteredDescription(it))
-                        },
-                        onFocusChange = {
-                            addEditViewModel.onEvent(AddEditNoteEvent.ChangeDescritionFocus(it))
-                        },
-                        isHintVisible = descriptionState.isHintVisible,
-                        singleLine = false,
-                        textStyle = MaterialTheme.typography.body1,
-                        modifier = Modifier.fillMaxHeight()
-                    )
+            Spacer(modifier = Modifier.height(16.dp))
+            TransparentTextField(
+                text = titleState.text,
+                hint = titleState.hint,
+                onValueChange = {
+                    addEditViewModel.onEvent(AddEditNoteEvent.EnteredTitle(it))
+                },
+                onFocusChange = {
+                    addEditViewModel.onEvent(AddEditNoteEvent.ChangeTitleFocus(it))
+                },
+                isHintVisible = titleState.isHintVisible,
+                singleLine = true,
+                textStyle = MaterialTheme.typography.h5
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+            TransparentTextField(
+                text = descriptionState.text,
+                hint = descriptionState.hint,
+                onValueChange = {
+                    addEditViewModel.onEvent(AddEditNoteEvent.EnteredDescription(it))
+                },
+                onFocusChange = {
+                    addEditViewModel.onEvent(AddEditNoteEvent.ChangeDescritionFocus(it))
+                },
+                isHintVisible = descriptionState.isHintVisible,
+                singleLine = false,
+                textStyle = MaterialTheme.typography.body1,
+                modifier = Modifier.fillMaxHeight()
+            )
         }
-
     }
-
 }
