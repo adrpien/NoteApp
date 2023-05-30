@@ -21,6 +21,7 @@ interface NoteDao {
     @Query("SELECT * FROM note")
     fun getAllNotes(): Flow<List<Note>>
 
+    // example query "SELECT SUM(price * amount) FROM table_name"
     @Query("SELECT * FROM note WHERE id LIKE :id")
     fun getNote(id: Int): Note
 
